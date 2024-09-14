@@ -1,28 +1,28 @@
-int btn1In = 2;
-int LEDout1 = 8;
+int grBtnInp = 2;
+int grBtnOutp = 8;
 
-int btn2In = 7;
-int LEDout2 = 12;
+int redBtnInp = 7;
+int redBtnOutp = 12;
 
 void setup() {
-    pinMode(LEDout1, OUTPUT);
-    pinMode(LEDout2, OUTPUT);
-    pinMode(btn1In, INPUT);
-    pinMode(btn2In, INPUT);
+    pinMode(grBtnOutp, OUTPUT);
+    pinMode(redBtnOutp, OUTPUT);
+    pinMode(grBtnInp, INPUT);
+    pinMode(redBtnInp, INPUT);
 }
 
 void loop() {
-  if(digitalRead(btn1In) == HIGH) {
-    digitalWrite(LEDout1, HIGH);
+  if(digitalRead(grBtnInp) == HIGH) {
+    digitalWrite(grBtnOutp, HIGH);
   }
   else {
-    digitalWrite(LEDout1, LOW);
+    digitalWrite(grBtnOutp, LOW);
   }
 
-  if(digitalRead(btn2In) == HIGH) {
-    digitalWrite(LEDout2, HIGH);
+  if(digitalRead(redBtnInp) == HIGH) {
+    digitalWrite(redBtnOutp, HIGH);
   }
   else {
-    digitalWrite(LEDout2, LOW);
+    digitalWrite(redBtnOutp, LOW);
   }
 }
