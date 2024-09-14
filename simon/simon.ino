@@ -1,4 +1,5 @@
 long randNumber;
+int userInput;
 
 int grBtnInp = 2;
 int grBtnOutp = 8;
@@ -14,23 +15,37 @@ void setup() {
 }
 
 void loop() {
-  //random LED BLINK logic
-  randNumber = random(2);
-  if(randNumber == 0) {
+  // //random LED BLINK logic
+  // randNumber = random(2);
+  // if(randNumber == 0) {
+  //   digitalWrite(grBtnOutp, HIGH);
+  //   delay(1000);
+  //   digitalWrite(grBtnOutp, LOW);
+  // }
+  // else {
+  //   digitalWrite(redBtnOutp, HIGH);
+  //   delay(1000);
+  //   digitalWrite(redBtnOutp, LOW);
+  // }
+  // delay(500);
+  // //random LED BLINK logic
+
+  //  // Wait for user input
+  // while (Serial.available() == 0) {
+  //   // Do nothing (wait until input is available)
+  // }
+  // userInput = Serial.parseInt();
+
+  if(digitalRead(grBtnInp) == HIGH) {
     digitalWrite(grBtnOutp, HIGH);
-    delay(1000);
+    delay(500);
     digitalWrite(grBtnOutp, LOW);
   }
-  else {
+  else if(digitalRead(redBtnInp) == HIGH) {
     digitalWrite(redBtnOutp, HIGH);
-    delay(1000);
+    delay(500);
     digitalWrite(redBtnOutp, LOW);
   }
-  delay(500);
-  //random LED BLINK logic
-
-  btnToLEDmap(grBtnInp, grBtnOutp);
-  btnToLEDmap(redBtnInp, redBtnOutp);
 }
 
 void btnToLEDmap(int inputPin, int outputPin) {
