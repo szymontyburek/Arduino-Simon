@@ -1,16 +1,18 @@
-int output = 12;
-int input = 2;
+int LEDout = 12;
+int btn1In = 2;
+int btn2In = 7;
 
 void setup() {
-    pinMode(output, OUTPUT);
-    pinMode(input, INPUT);
+    pinMode(LEDout, OUTPUT);
+    pinMode(btn1In, INPUT);
+    pinMode(btn2In, INPUT);
 }
 
 void loop() {
-  if(digitalRead(input) == HIGH) { //read voltage of pin 2
-    digitalWrite(output, HIGH);
+  if(digitalRead(btn1In) == HIGH || digitalRead(btn2In) == HIGH) {
+    digitalWrite(LEDout, HIGH);
   }
   else {
-    digitalWrite(output, LOW);
+    digitalWrite(LEDout, LOW);
   }
 }
