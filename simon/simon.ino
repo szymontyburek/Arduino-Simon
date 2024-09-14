@@ -1,3 +1,5 @@
+long randNumber;
+
 int grBtnInp = 2;
 int grBtnOutp = 8;
 
@@ -12,6 +14,21 @@ void setup() {
 }
 
 void loop() {
+  //random LED BLINK logic
+  randNumber = random(2);
+  if(randNumber == 0) {
+    digitalWrite(grBtnOutp, HIGH);
+    delay(1000);
+    digitalWrite(grBtnOutp, LOW);
+  }
+  else {
+    digitalWrite(redBtnOutp, HIGH);
+    delay(1000);
+    digitalWrite(redBtnOutp, LOW);
+  }
+  delay(500);
+  //random LED BLINK logic
+
   btnToLEDmap(grBtnInp, grBtnOutp);
   btnToLEDmap(redBtnInp, redBtnOutp);
 }
