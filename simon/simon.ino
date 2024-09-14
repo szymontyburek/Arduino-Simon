@@ -12,17 +12,11 @@ void setup() {
 }
 
 void loop() {
-  if(digitalRead(grBtnInp) == HIGH) {
-    digitalWrite(grBtnOutp, HIGH);
-  }
-  else {
-    digitalWrite(grBtnOutp, LOW);
-  }
+  btnToLEDmap(grBtnInp, grBtnOutp);
+  btnToLEDmap(redBtnInp, redBtnOutp);
+}
 
-  if(digitalRead(redBtnInp) == HIGH) {
-    digitalWrite(redBtnOutp, HIGH);
-  }
-  else {
-    digitalWrite(redBtnOutp, LOW);
-  }
+void btnToLEDmap(int inputPin, int outputPin) {
+  if(digitalRead(inputPin) == HIGH) digitalWrite(outputPin, HIGH);
+  else digitalWrite(outputPin, LOW);
 }
