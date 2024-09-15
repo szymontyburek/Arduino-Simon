@@ -53,13 +53,13 @@ void blink(int outputPin, int delayInt) {
 
 String readUserInput() {
   // Wait until green button is clicked is available
-  while (digitalRead(grBtnInp) == LOW ) {
+  while (digitalRead(grBtnInp) == LOW && digitalRead(redBtnInp) == LOW) {
     // Do nothing, just wait
   }
 
-  while (digitalRead(grBtnInp) == HIGH ) {
+  while (digitalRead(grBtnInp) == HIGH || digitalRead(redBtnInp) == HIGH) {
     // Do nothing, just wait
   }
   
-  return "Green is clicked";
+  return "Button was clicked";
 }
