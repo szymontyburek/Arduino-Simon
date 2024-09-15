@@ -36,13 +36,6 @@ void loop() {
   delay(500);
   //random LED BLINK logic
 
-  // if(digitalRead(grBtnInp) == HIGH) {
-  //   blink(grBtnOutp, 50);
-  // }
-  // else if(digitalRead(redBtnInp) == HIGH) {
-  //   blink(redBtnOutp, 50);
-  // }
-
   Serial.println(readBtnClick());
 }
 
