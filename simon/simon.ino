@@ -1,19 +1,3 @@
-// long randNumber;
-// int userInput;
-
-// int grBtnInp = 2;
-// int grBtnOutp = 8;
-
-// int redBtnInp = 7;
-// int redBtnOutp = 12;
-
-// void setup() {
-//     pinMode(grBtnOutp, OUTPUT);
-//     pinMode(redBtnOutp, OUTPUT);
-//     pinMode(grBtnInp, INPUT);
-//     pinMode(redBtnInp, INPUT);
-// }
-
 // void loop() {
 //   // //random LED BLINK logic
 //   // randNumber = random(2);
@@ -40,8 +24,21 @@
 //   digitalWrite(outputPin, LOW);
 // }
 
+long randNumber;
+int userInput;
+
+int grBtnInp = 2;
+int grBtnOutp = 8;
+
+int redBtnInp = 7;
+int redBtnOutp = 12;
+
 void setup() {
   Serial.begin(9600);
+  pinMode(grBtnOutp, OUTPUT);
+  pinMode(redBtnOutp, OUTPUT);
+  pinMode(grBtnInp, INPUT);
+  pinMode(redBtnInp, INPUT);
 }
 
 void loop() {
@@ -56,11 +53,11 @@ void blink(int outputPin, int delayInt) {
 
 String readUserInput() {
   // Wait until green button is clicked is available
-  while (digitalRead(2) == LOW ) {
+  while (digitalRead(grBtnInp) == LOW ) {
     // Do nothing, just wait
   }
 
-  while (digitalRead(2) == HIGH ) {
+  while (digitalRead(grBtnInp) == HIGH ) {
     // Do nothing, just wait
   }
   
