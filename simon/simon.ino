@@ -1,13 +1,6 @@
 // void loop() {
 
 // }
-
-// void blink(int outputPin, int delayInt) {
-//   digitalWrite(outputPin, HIGH);
-//   delay(delayInt);
-//   digitalWrite(outputPin, LOW);
-// }
-
 long randNumber;
 
 int grBtnInp = 2;
