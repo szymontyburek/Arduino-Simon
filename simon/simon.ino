@@ -18,14 +18,10 @@ void loop() {
   // //random LED BLINK logic
   randNumber = random(2);
   if(randNumber == 0) {
-    digitalWrite(grBtnOutp, HIGH);
-    delay(1000);
-    digitalWrite(grBtnOutp, LOW);
+    blink(grBtnOutp);
   }
   else {
-    digitalWrite(redBtnOutp, HIGH);
-    delay(1000);
-    digitalWrite(redBtnOutp, LOW);
+    blink(redBtnOutp);
   }
   delay(500);
   // //random LED BLINK logic
@@ -42,7 +38,8 @@ void loop() {
   // }
 }
 
-void btnToLEDmap(int inputPin, int outputPin) {
-  if(digitalRead(inputPin) == HIGH) digitalWrite(outputPin, HIGH);
-  else digitalWrite(outputPin, LOW);
+void blink(int outputPin) {
+  digitalWrite(outputPin, HIGH);
+  delay(1000);
+  digitalWrite(outputPin, LOW);
 }
