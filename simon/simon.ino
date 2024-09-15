@@ -30,7 +30,6 @@ void loop() {
     blink(redBtnOutp, 300);
     LEDchoices[0] = "red";
   }
-  delay(500);
   //random LED BLINK logic
 
   Serial.println(readBtnClick(LEDchoices[0]));
@@ -51,12 +50,12 @@ String readBtnClick(String LEDchosen) {
   String message;
   if(digitalRead(grBtnInp) == HIGH)
     {
-      blink(grBtnOutp, 100);
+      blink(grBtnOutp, 300);
       if(LEDchosen == "green") Serial.println("correct!");
       else Serial.println("incorrect :(");
     }
   else  {
-    blink(redBtnOutp, 100);
+    blink(redBtnOutp, 300);
       if(LEDchosen == "red") Serial.println("correct!");
       else Serial.println("incorrect :(");
   }
