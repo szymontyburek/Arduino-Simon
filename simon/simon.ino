@@ -2,7 +2,6 @@
 
 // }
 long randNumber;
-int LEDchoices[1];
 
 int grBtnInp = 2;
 int grBtnOutp = 8;
@@ -19,6 +18,8 @@ void setup() {
 }
 
 void loop() {
+  String LEDchoices[1];
+
   //random LED BLINK logic
   randNumber = random(2);
   if(randNumber == 0) {
@@ -32,7 +33,7 @@ void loop() {
   delay(500);
   //random LED BLINK logic
 
-  Serial.println(readBtnClick());
+  Serial.println(readBtnClick(LEDchoices[0]));
 }
 
 void blink(int outputPin, int delayInt) {
@@ -41,7 +42,7 @@ void blink(int outputPin, int delayInt) {
   digitalWrite(outputPin, LOW);
 }
 
-String readBtnClick() {
+String readBtnClick(String LEDchosen) {
   // Wait until green button is clicked is available
   while (digitalRead(grBtnInp) == LOW && digitalRead(redBtnInp) == LOW) {
     // Do nothing, just wait
@@ -51,12 +52,12 @@ String readBtnClick() {
   if(digitalRead(grBtnInp) == HIGH)
     {
       blink(grBtnOutp, 100);
-      if(LEDchoices[0] == "green") Serial.println("correct!");
+      if(LEDchosen == "green") Serial.println("correct!");
       else Serial.println("incorrect :(");
     }
   else  {
     blink(redBtnOutp, 100);
-      if(LEDchoices[0] == "red") Serial.println("correct!");
+      if(LEDchosen == "red") Serial.println("correct!");
       else Serial.println("incorrect :(");
   }
   
