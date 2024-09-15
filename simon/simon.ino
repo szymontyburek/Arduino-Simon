@@ -57,9 +57,13 @@ String readUserInput() {
     // Do nothing, just wait
   }
 
+  String message;
+  if(digitalRead(grBtnInp) == HIGH) message = "Green was clicked";
+  else message = "Red was clicked";
+
   while (digitalRead(grBtnInp) == HIGH || digitalRead(redBtnInp) == HIGH) {
     // Do nothing, just wait
   }
   
-  return "Button was clicked";
+  return message;
 }
