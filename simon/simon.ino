@@ -18,6 +18,8 @@ void setup() {
 
 void loop() {
   int score = 0;
+  String* dynArr = new String[score + 1];
+
   while (2 < 3) {
     String LEDchoices[score + 1];
 
@@ -33,7 +35,23 @@ void loop() {
     }
     //random LED BLINK logic
 
-    if(readBtnClick(LEDchoices[0])) score++;
+    if(readBtnClick(LEDchoices[0])) {
+      score++;
+
+      //expand dynArr by 1 element
+      int newLength = score + 1;
+      String* dynArrTmp = new String[newLength];
+
+      for(int i = 0; i < newLength - 1; i++) dynArrTmp[i] = dynArr[i];
+
+      dynArrTmp[newLength - 1] = LEDchoices[0];
+
+      delete[] dynArr;
+      dynArr = dynArrTmp;
+
+      //print elements of dynArr
+      for(int i = 0; i < newLength; i++) Serial.println(dynArr[i]);
+    }
     else score = 0;
     
     Serial.print("Score: ");
