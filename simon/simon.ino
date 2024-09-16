@@ -21,21 +21,21 @@ void loop() {
   String* dynArr = new String[score + 1];
 
   while (2 < 3) {
-    String LEDchoices[score + 1];
+    String LEDchoice;
 
     //random LED BLINK logic
     randNumber = random(2);
     if(randNumber == 0) {
       blink(grBtnOutp, 600);
-      LEDchoices[0] = "green";
+      LEDchoice = "green";
     }
     else {
       blink(redBtnOutp, 600);
-      LEDchoices[0] = "red";
+      LEDchoice = "red";
     }
     //random LED BLINK logic
 
-    if(readBtnClick(LEDchoices[0])) {
+    if(readBtnClick(LEDchoice)) {
       score++;
 
       //expand dynArr by 1 element
@@ -44,7 +44,7 @@ void loop() {
 
       for(int i = 0; i < newLength - 1; i++) dynArrTmp[i] = dynArr[i];
 
-      dynArrTmp[newLength - 1] = LEDchoices[0];
+      dynArrTmp[newLength - 1] = LEDchoice;
 
       delete[] dynArr;
       dynArr = dynArrTmp;
