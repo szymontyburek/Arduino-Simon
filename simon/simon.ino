@@ -1,6 +1,3 @@
-// void loop() {
-
-// }
 long randNumber;
 
 int grBtnInp = 2;
@@ -15,27 +12,33 @@ void setup() {
   pinMode(redBtnOutp, OUTPUT);
   pinMode(grBtnInp, INPUT);
   pinMode(redBtnInp, INPUT);
+
+  delay(1000);
 }
 
 void loop() {
-  String LEDchoices[1];
-
-  //random LED BLINK logic
-  randNumber = random(2);
-  if(randNumber == 0) {
-    blink(grBtnOutp, 300);
-    LEDchoices[0] = "green";
-  }
-  else {
-    blink(redBtnOutp, 300);
-    LEDchoices[0] = "red";
-  }
-  //random LED BLINK logic
-
   int score = 0;
-  if(readBtnClick(LEDchoices[0])) score++;
-  Serial.print("Score: ");
-  Serial.println(score);
+  while (2 < 3) {
+    String LEDchoices[score + 1];
+
+    //random LED BLINK logic
+    randNumber = random(2);
+    if(randNumber == 0) {
+      blink(grBtnOutp, 600);
+      LEDchoices[0] = "green";
+    }
+    else {
+      blink(redBtnOutp, 600);
+      LEDchoices[0] = "red";
+    }
+    //random LED BLINK logic
+
+    if(readBtnClick(LEDchoices[0])) score++;
+    Serial.print("Score: ");
+    Serial.println(score);
+
+    delay(500);
+  }
 }
 
 void blink(int outputPin, int delayInt) {
