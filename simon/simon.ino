@@ -1,3 +1,6 @@
+#include <Hashtable.h>
+#include <Arduino.h>
+
 long randNumber;
 
 int grBtnInp = 2;
@@ -19,9 +22,14 @@ void setup() {
 void loop() {
   int score = 0;
   String* LEDchoices = new String[score + 1];
+  Hashtable<String, int> colorToPin;
+  colorToPin.put("green", grBtnOutp);
+  colorToPin.put("red", redBtnOutp);
 
   while (2 < 3) {
     String LEDchoice;
+
+    //for(int i = 0; i < sizeof(LEDchoices) / sizeof(LEDchoices[0])) blink()
 
     //random LED BLINK logic
     randNumber = random(2);
