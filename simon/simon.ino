@@ -32,19 +32,47 @@ void loop() {
     //random LED BLINK logic
     randNumber = random(2);
     if(randNumber == 0) {
-      blink(grBtnOutp, 600);
       LEDchoice = "green";
     }
     else {
-      blink(redBtnOutp, 600);
       LEDchoice = "red";
     }
     //random LED BLINK logic
 
-    if(validChoice(LEDchoice)) {
-      score++;
+    LEDchoices[score] = LEDchoice;
 
-      //expand LEDchoices by 1 element
+      for(int i = 0; i < score + 1; i++) 
+      {
+        Serial.println(LEDchoices[i]);  
+        blink(colorToPin.getElement(LEDchoices[i]), 600);
+      }
+
+      for(int i = 0; i < score + 1; i++) 
+      {
+        // Wait until button is clicked is available
+        while (digitalRead(grBtnInp) == LOW && digitalRead(redBtnInp) == LOW) {
+          // Do nothing, just wait
+        }
+
+        if(digitalRead(grBtnInp) == HIGH)
+          {
+            blink(grBtnOutp, 300);
+            if(LEDchoices[i] == "green") Serial.println("Good");
+            else Serial.println("Bad");
+          }
+        else  {
+          blink(redBtnOutp, 300);
+          if(LEDchoices[i] == "red") Serial.println("Good");
+          else Serial.println("Bad");
+        }
+        
+        while (digitalRead(grBtnInp) == HIGH || digitalRead(redBtnInp) == HIGH) {
+          // Do nothing, just wait
+        }
+      }
+
+            //expand LEDchoices by 1 element
+      score++;
       int newLength = score + 1;
       String* LEDchoicesTmp = new String[newLength];
 
@@ -54,14 +82,14 @@ void loop() {
 
       delete[] LEDchoices;
       LEDchoices = LEDchoicesTmp;
+      //expand LEDchoices by 1 element
 
-      for(int i = 1; i < newLength; i++) //for some unknown reason, there exists an extra element. That is why i equal 1, and not 0, at the start of the for loop
-      {
-        Serial.println(LEDchoices[i]);  
-        blink(colorToPin.getElement(LEDchoices[i]), 600);
-      }
-    }
-    else break;
+
+    // if(validChoice(LEDchoice)) {
+
+
+    // }
+    // else break;
     
     Serial.print("Score: ");
     Serial.println(score);
