@@ -21,15 +21,13 @@ void setup() {
 
 void loop() {
   int score = 0;
-  String* LEDchoices = new String[score + 1];
+  String* LEDchoices = new String[1];
   Hashtable<String, int> colorToPin;
   colorToPin.put("green", grBtnOutp);
   colorToPin.put("red", redBtnOutp);
 
   while (2 < 3) {
     String LEDchoice;
-
-    //for(int i = 0; i < sizeof(LEDchoices) / sizeof(LEDchoices[0])) blink()
 
     //random LED BLINK logic
     randNumber = random(2);
@@ -57,15 +55,17 @@ void loop() {
       delete[] LEDchoices;
       LEDchoices = LEDchoicesTmp;
 
-      //print elements of LEDchoices
-      for(int i = 0; i < newLength; i++) Serial.println(LEDchoices[i]);
+      for(int i = 1; i < newLength; i++) //for some unknown reason, there exists an extra element. That is why i equal 1, and not 0, at the start of the for loop
+      {
+        Serial.println(LEDchoices[i]);  
+        blink(colorToPin.getElement(LEDchoices[i]), 600);
+        delay(300);
+      }
     }
     else score = 0;
     
     Serial.print("Score: ");
     Serial.println(score);
-
-    delay(500);
   }
 }
 
