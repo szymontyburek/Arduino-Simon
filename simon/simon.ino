@@ -39,6 +39,7 @@ void loop() {
     }
     //random LED BLINK logic
 
+    //Current game LEDs are lit
     LEDchoices[score] = LEDchoice;
 
       for(int i = 0; i < score + 1; i++) 
@@ -46,7 +47,9 @@ void loop() {
         Serial.println(LEDchoices[i]);  
         blink(colorToPin.getElement(LEDchoices[i]), 600);
       }
+    //Current game LEDs are lit
 
+    //User response
       for(int i = 0; i < score + 1; i++) 
       {
         // Wait until button is clicked is available
@@ -70,8 +73,10 @@ void loop() {
           // Do nothing, just wait
         }
       }
+      //User response
 
-            //expand LEDchoices by 1 element
+
+      //modify array by dynamically allocating memory
       score++;
       int newLength = score + 1;
       String* LEDchoicesTmp = new String[newLength];
@@ -82,14 +87,7 @@ void loop() {
 
       delete[] LEDchoices;
       LEDchoices = LEDchoicesTmp;
-      //expand LEDchoices by 1 element
-
-
-    // if(validChoice(LEDchoice)) {
-
-
-    // }
-    // else break;
+      //modify array by dynamically allocating memory
     
     Serial.print("Score: ");
     Serial.println(score);
