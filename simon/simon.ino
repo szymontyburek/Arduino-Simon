@@ -41,7 +41,7 @@ void loop() {
     }
     //random LED BLINK logic
 
-    if(readBtnClick(LEDchoice)) {
+    if(validChoice(LEDchoice)) {
       score++;
 
       //expand LEDchoices by 1 element
@@ -59,7 +59,6 @@ void loop() {
       {
         Serial.println(LEDchoices[i]);  
         blink(colorToPin.getElement(LEDchoices[i]), 600);
-        delay(300);
       }
     }
     else score = 0;
@@ -73,9 +72,10 @@ void blink(int outputPin, int delayInt) {
   digitalWrite(outputPin, HIGH);
   delay(delayInt);
   digitalWrite(outputPin, LOW);
+  delay(delayInt);
 }
 
-bool readBtnClick(String LEDchosen) {
+bool validChoice(String LEDchosen) {
   // Wait until green button is clicked is available
   while (digitalRead(grBtnInp) == LOW && digitalRead(redBtnInp) == LOW) {
     // Do nothing, just wait
@@ -96,6 +96,5 @@ bool readBtnClick(String LEDchosen) {
     // Do nothing, just wait
   }
   
-  delay(500);
   return correct;
 }
