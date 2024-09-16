@@ -18,7 +18,7 @@ void setup() {
 
 void loop() {
   int score = 0;
-  String* dynArr = new String[score + 1];
+  String* LEDchoices = new String[score + 1];
 
   while (2 < 3) {
     String LEDchoice;
@@ -38,19 +38,19 @@ void loop() {
     if(readBtnClick(LEDchoice)) {
       score++;
 
-      //expand dynArr by 1 element
+      //expand LEDchoices by 1 element
       int newLength = score + 1;
-      String* dynArrTmp = new String[newLength];
+      String* LEDchoicesTmp = new String[newLength];
 
-      for(int i = 0; i < newLength - 1; i++) dynArrTmp[i] = dynArr[i];
+      for(int i = 0; i < newLength - 1; i++) LEDchoicesTmp[i] = LEDchoices[i];
 
-      dynArrTmp[newLength - 1] = LEDchoice;
+      LEDchoicesTmp[newLength - 1] = LEDchoice;
 
-      delete[] dynArr;
-      dynArr = dynArrTmp;
+      delete[] LEDchoices;
+      LEDchoices = LEDchoicesTmp;
 
-      //print elements of dynArr
-      for(int i = 0; i < newLength; i++) Serial.println(dynArr[i]);
+      //print elements of LEDchoices
+      for(int i = 0; i < newLength; i++) Serial.println(LEDchoices[i]);
     }
     else score = 0;
     
