@@ -34,6 +34,8 @@ void loop() {
     //random LED BLINK logic
 
     if(readBtnClick(LEDchoices[0])) score++;
+    else score = 0;
+    
     Serial.print("Score: ");
     Serial.println(score);
 
