@@ -26,7 +26,7 @@ void loop() {
   colorToPin.put("green", grBtnOutp);
   colorToPin.put("red", redBtnOutp);
 
-  while (2 < 3) {
+  while (true) {
     String LEDchoice;
 
     //random LED BLINK logic
@@ -61,7 +61,7 @@ void loop() {
         blink(colorToPin.getElement(LEDchoices[i]), 600);
       }
     }
-    else score = 0;
+    else break;
     
     Serial.print("Score: ");
     Serial.println(score);
