@@ -1,6 +1,3 @@
-#include <Hashtable.h>
-#include <Arduino.h>
-
 long randNumber;
 int highScore;
 int score;
@@ -24,9 +21,6 @@ void setup() {
 void loop() {
   score = 0;
   int* LEDoutputs = new int[1];
-  Hashtable<String, int> colorToPin;
-  colorToPin.put("green", grBtnOutp);
-  colorToPin.put("red", redBtnOutp);
 
   while (true) {
     int LEDoutput;
