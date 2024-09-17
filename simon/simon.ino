@@ -56,42 +56,24 @@ void loop() {
       if(digitalRead(grBtnInp) == HIGH)
         {
           blink(grBtnOutp, 300);
-          if(LEDchoices[i] == "green") Serial.println("Good");
-          else {
-            for(int i = 0; i < 3; i++){
-              digitalWrite(grBtnOutp, HIGH);
-              digitalWrite(redBtnOutp, HIGH);
-              delay(200);
-              digitalWrite(grBtnOutp, LOW);
-              digitalWrite(redBtnOutp, LOW);
-              delay(200);
-            }
-            delay(1000);
+          if(LEDchoices[i] != "green")
+          {
+            gameOver();
             return;
-          }
+          } 
         }
       else  {
         blink(redBtnOutp, 300);
-        if(LEDchoices[i] == "red") Serial.println("Good");
-        else {
-            for(int i = 0; i < 3; i++){
-              digitalWrite(grBtnOutp, HIGH);
-              digitalWrite(redBtnOutp, HIGH);
-              delay(200);
-              digitalWrite(grBtnOutp, LOW);
-              digitalWrite(redBtnOutp, LOW);
-              delay(200);
-            }
-            delay(1000);
-            return;
-        }
+        if(LEDchoices[i] != "red") 
+        {
+          gameOver();
+          return;
+        } 
       }
         
       while (digitalRead(grBtnInp) == HIGH || digitalRead(redBtnInp) == HIGH) {
         // Do nothing, just wait
       }
-      Serial.println("poopoo");
-
     }
     //User response
 
@@ -111,6 +93,18 @@ void loop() {
     Serial.print("Score: ");
     Serial.println(score);
   }
+}
+
+void gameOver() {
+  for(int i = 0; i < 3; i++){
+    digitalWrite(grBtnOutp, HIGH);
+    digitalWrite(redBtnOutp, HIGH);
+    delay(200);
+    digitalWrite(grBtnOutp, LOW);
+    digitalWrite(redBtnOutp, LOW);
+    delay(200);
+  }
+  delay(1000);
 }
 
 void blink(int outputPin, int delayInt) {
