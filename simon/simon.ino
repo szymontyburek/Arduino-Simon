@@ -67,6 +67,7 @@ void loop() {
               delay(200);
             }
             delay(1000);
+            return;
           }
         }
       else  {
@@ -82,12 +83,15 @@ void loop() {
               delay(200);
             }
             delay(1000);
+            return;
         }
       }
         
       while (digitalRead(grBtnInp) == HIGH || digitalRead(redBtnInp) == HIGH) {
         // Do nothing, just wait
       }
+      Serial.println("poopoo");
+
     }
     //User response
 
