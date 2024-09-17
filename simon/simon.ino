@@ -23,26 +23,26 @@ void setup() {
 
 void loop() {
   score = 0;
-  int* LEDchoices = new int[1];
+  int* LEDoutputs = new int[1];
   Hashtable<String, int> colorToPin;
   colorToPin.put("green", grBtnOutp);
   colorToPin.put("red", redBtnOutp);
 
   while (true) {
-    int LEDchoice;
+    int LEDoutput;
 
     //random LED BLINK logic
     randNumber = random(2);
-    if(randNumber == 0) LEDchoice = grBtnOutp;
-    else LEDchoice = redBtnOutp;
+    if(randNumber == 0) LEDoutput = grBtnOutp;
+    else LEDoutput = redBtnOutp;
     //random LED BLINK logic
 
     //Current game LEDs are lit
-    LEDchoices[score] = LEDchoice;
+    LEDoutputs[score] = LEDoutput;
 
     for(int i = 0; i < score + 1; i++) 
     {
-      blink(LEDchoices[i], 600);
+      blink(LEDoutputs[i], 600);
     }
     //Current game LEDs are lit
 
@@ -57,7 +57,7 @@ void loop() {
       if(digitalRead(grBtnInp) == HIGH)
       {
         blink(grBtnOutp, 300);
-        if(LEDchoices[i] != grBtnOutp)
+        if(LEDoutputs[i] != grBtnOutp)
         {
           gameOver();
           return;
@@ -66,7 +66,7 @@ void loop() {
       else  
       {
         blink(redBtnOutp, 300);
-        if(LEDchoices[i] != redBtnOutp) 
+        if(LEDoutputs[i] != redBtnOutp) 
         {
           gameOver();
           return;
@@ -84,14 +84,14 @@ void loop() {
 
     //modify array by dynamically allocating memory
     int newLength = score + 1;
-    int* LEDchoicesTmp = new int[newLength];
+    int* LEDoutputsTmp = new int[newLength];
 
-    for(int i = 0; i < newLength - 1; i++) LEDchoicesTmp[i] = LEDchoices[i];
+    for(int i = 0; i < newLength - 1; i++) LEDoutputsTmp[i] = LEDoutputs[i];
 
-    LEDchoicesTmp[newLength - 1] = LEDchoice;
+    LEDoutputsTmp[newLength - 1] = LEDoutput;
 
-    delete[] LEDchoices;
-    LEDchoices = LEDchoicesTmp;
+    delete[] LEDoutputs;
+    LEDoutputs = LEDoutputsTmp;
     //modify array by dynamically allocating memory
   }
 }
