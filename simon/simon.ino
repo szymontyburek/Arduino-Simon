@@ -58,7 +58,7 @@ void loop() {
         blink(grBtnOutp, 300);
         if(LEDchoices[i] != "green")
         {
-          gameOver();
+          gameOver(score);
           return;
         }         
       }
@@ -67,7 +67,7 @@ void loop() {
         blink(redBtnOutp, 300);
         if(LEDchoices[i] != "red") 
         {
-          gameOver();
+          gameOver(score);
           return;
         } 
       }
@@ -77,16 +77,9 @@ void loop() {
       }
     }
     //User response
-
+    
     score++;
-
-    Serial.print("Score: ");
-    Serial.println(score);
-
-    if(score > highScore) highScore = score;
-
-    Serial.print("Highest: ");
-    Serial.println(highScore);
+    reportScore(score);
 
     //modify array by dynamically allocating memory
     int newLength = score + 1;
@@ -102,8 +95,10 @@ void loop() {
   }
 }
 
-void gameOver() {
-  for(int i = 0; i < 3; i++){
+void gameOver(int score) {
+    reportScore(score);
+
+    for(int i = 0; i < 3; i++){
     digitalWrite(grBtnOutp, HIGH);
     digitalWrite(redBtnOutp, HIGH);
     delay(200);
@@ -112,6 +107,16 @@ void gameOver() {
     delay(200);
   }
   delay(1000);
+}
+
+void reportScore(int score) {
+  Serial.print("Score: ");
+  Serial.println(score);
+
+  if(score > highScore) highScore = score;
+
+  Serial.print("Highest: ");
+  Serial.println(highScore);
 }
 
 void blink(int outputPin, int delayInt) {
