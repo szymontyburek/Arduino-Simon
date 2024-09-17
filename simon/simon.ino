@@ -119,27 +119,3 @@ void blink(int outputPin, int delayInt) {
   digitalWrite(outputPin, LOW);
   delay(delayInt);
 }
-
-bool validChoice(String LEDchosen) {
-  // Wait until green button is clicked is available
-  while (digitalRead(grBtnInp) == LOW && digitalRead(redBtnInp) == LOW) {
-    // Do nothing, just wait
-  }
-
-  bool correct = false;
-  if(digitalRead(grBtnInp) == HIGH)
-    {
-      blink(grBtnOutp, 300);
-      if(LEDchosen == "green") correct = true;
-    }
-  else  {
-    blink(redBtnOutp, 300);
-      if(LEDchosen == "red") correct = true;
-  }
-  
-  while (digitalRead(grBtnInp) == HIGH || digitalRead(redBtnInp) == HIGH) {
-    // Do nothing, just wait
-  }
-  
-  return correct;
-}
