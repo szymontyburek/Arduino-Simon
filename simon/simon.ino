@@ -31,12 +31,8 @@ void loop() {
 
     //random LED BLINK logic
     randNumber = random(2);
-    if(randNumber == 0) {
-      LEDchoice = "green";
-    }
-    else {
-      LEDchoice = "red";
-    }
+    if(randNumber == 0) LEDchoice = "green";
+    else LEDchoice = "red";
     //random LED BLINK logic
 
     //Current game LEDs are lit
