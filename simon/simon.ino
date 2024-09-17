@@ -2,6 +2,7 @@
 #include <Arduino.h>
 
 long randNumber;
+int highScore;
 
 int grBtnInp = 2;
 int grBtnOutp = 8;
@@ -40,7 +41,6 @@ void loop() {
 
     for(int i = 0; i < score + 1; i++) 
     {
-      Serial.println(LEDchoices[i]);  
       blink(colorToPin.getElement(LEDchoices[i]), 600);
     }
     //Current game LEDs are lit
@@ -52,17 +52,18 @@ void loop() {
       while (digitalRead(grBtnInp) == LOW && digitalRead(redBtnInp) == LOW) {
         // Do nothing, just wait
       }
-
+        
       if(digitalRead(grBtnInp) == HIGH)
+      {
+        blink(grBtnOutp, 300);
+        if(LEDchoices[i] != "green")
         {
-          blink(grBtnOutp, 300);
-          if(LEDchoices[i] != "green")
-          {
-            gameOver();
-            return;
-          } 
-        }
-      else  {
+          gameOver();
+          return;
+        }         
+      }
+      else  
+      {
         blink(redBtnOutp, 300);
         if(LEDchoices[i] != "red") 
         {
@@ -77,8 +78,17 @@ void loop() {
     }
     //User response
 
-    //modify array by dynamically allocating memory
     score++;
+
+    Serial.print("Score: ");
+    Serial.println(score);
+
+    if(score > highScore) highScore = score;
+
+    Serial.print("Highest: ");
+    Serial.println(highScore);
+
+    //modify array by dynamically allocating memory
     int newLength = score + 1;
     String* LEDchoicesTmp = new String[newLength];
 
@@ -89,9 +99,6 @@ void loop() {
     delete[] LEDchoices;
     LEDchoices = LEDchoicesTmp;
     //modify array by dynamically allocating memory
-    
-    Serial.print("Score: ");
-    Serial.println(score);
   }
 }
 
