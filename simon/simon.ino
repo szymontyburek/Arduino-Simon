@@ -3,6 +3,7 @@
 
 long randNumber;
 int highScore;
+int score;
 
 int grBtnInp = 2;
 int grBtnOutp = 8;
@@ -21,7 +22,7 @@ void setup() {
 }
 
 void loop() {
-  int score = 0;
+  score = 0;
   String* LEDchoices = new String[1];
   Hashtable<String, int> colorToPin;
   colorToPin.put("green", grBtnOutp);
@@ -58,7 +59,7 @@ void loop() {
         blink(grBtnOutp, 300);
         if(LEDchoices[i] != "green")
         {
-          gameOver(score);
+          gameOver();
           return;
         }         
       }
@@ -67,7 +68,7 @@ void loop() {
         blink(redBtnOutp, 300);
         if(LEDchoices[i] != "red") 
         {
-          gameOver(score);
+          gameOver();
           return;
         } 
       }
@@ -79,7 +80,7 @@ void loop() {
     //User response
     
     score++;
-    reportScore(score);
+    reportScore();
 
     //modify array by dynamically allocating memory
     int newLength = score + 1;
@@ -95,8 +96,8 @@ void loop() {
   }
 }
 
-void gameOver(int score) {
-    reportScore(score);
+void gameOver() {
+    reportScore();
 
     for(int i = 0; i < 3; i++){
     digitalWrite(grBtnOutp, HIGH);
@@ -109,7 +110,7 @@ void gameOver(int score) {
   delay(1000);
 }
 
-void reportScore(int score) {
+void reportScore() {
   Serial.print("Score: ");
   Serial.println(score);
 
