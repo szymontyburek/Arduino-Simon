@@ -42,52 +42,51 @@ void loop() {
     //Current game LEDs are lit
     LEDchoices[score] = LEDchoice;
 
-      for(int i = 0; i < score + 1; i++) 
-      {
-        Serial.println(LEDchoices[i]);  
-        blink(colorToPin.getElement(LEDchoices[i]), 600);
-      }
+    for(int i = 0; i < score + 1; i++) 
+    {
+      Serial.println(LEDchoices[i]);  
+      blink(colorToPin.getElement(LEDchoices[i]), 600);
+    }
     //Current game LEDs are lit
 
     //User response
-      for(int i = 0; i < score + 1; i++) 
-      {
-        // Wait until button is clicked is available
-        while (digitalRead(grBtnInp) == LOW && digitalRead(redBtnInp) == LOW) {
-          // Do nothing, just wait
-        }
+    for(int i = 0; i < score + 1; i++) 
+    {
+      // Wait until button is clicked is available
+      while (digitalRead(grBtnInp) == LOW && digitalRead(redBtnInp) == LOW) {
+        // Do nothing, just wait
+      }
 
-        if(digitalRead(grBtnInp) == HIGH)
-          {
-            blink(grBtnOutp, 300);
-            if(LEDchoices[i] == "green") Serial.println("Good");
-            else Serial.println("Bad");
-          }
-        else  {
-          blink(redBtnOutp, 300);
-          if(LEDchoices[i] == "red") Serial.println("Good");
+      if(digitalRead(grBtnInp) == HIGH)
+        {
+          blink(grBtnOutp, 300);
+          if(LEDchoices[i] == "green") Serial.println("Good");
           else Serial.println("Bad");
         }
-        
-        while (digitalRead(grBtnInp) == HIGH || digitalRead(redBtnInp) == HIGH) {
-          // Do nothing, just wait
-        }
+      else  {
+        blink(redBtnOutp, 300);
+        if(LEDchoices[i] == "red") Serial.println("Good");
+        else Serial.println("Bad");
       }
-      //User response
+        
+      while (digitalRead(grBtnInp) == HIGH || digitalRead(redBtnInp) == HIGH) {
+        // Do nothing, just wait
+      }
+    }
+    //User response
 
+    //modify array by dynamically allocating memory
+    score++;
+    int newLength = score + 1;
+    String* LEDchoicesTmp = new String[newLength];
 
-      //modify array by dynamically allocating memory
-      score++;
-      int newLength = score + 1;
-      String* LEDchoicesTmp = new String[newLength];
+    for(int i = 0; i < newLength - 1; i++) LEDchoicesTmp[i] = LEDchoices[i];
 
-      for(int i = 0; i < newLength - 1; i++) LEDchoicesTmp[i] = LEDchoices[i];
+    LEDchoicesTmp[newLength - 1] = LEDchoice;
 
-      LEDchoicesTmp[newLength - 1] = LEDchoice;
-
-      delete[] LEDchoices;
-      LEDchoices = LEDchoicesTmp;
-      //modify array by dynamically allocating memory
+    delete[] LEDchoices;
+    LEDchoices = LEDchoicesTmp;
+    //modify array by dynamically allocating memory
     
     Serial.print("Score: ");
     Serial.println(score);
