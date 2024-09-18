@@ -11,6 +11,9 @@ int redBtnOutp = 9;
 int ylBtnInp = 4;
 int ylBtnOutp = 10;
 
+int blBtnInp = 5;
+int blBtnOutp = 10;
+
 void setup() {
   Serial.begin(9600);
   pinMode(grBtnInp, INPUT);
@@ -19,6 +22,8 @@ void setup() {
   pinMode(redBtnOutp, OUTPUT);
   pinMode(ylBtnInp, INPUT);
   pinMode(ylBtnOutp, OUTPUT);
+  pinMode(blBtnInp, INPUT);
+  pinMode(blBtnOutp, OUTPUT);
 
   delay(1000);
 }
@@ -31,10 +36,11 @@ void loop() {
     int LEDoutput;
 
     //random LED BLINK logic
-    randNumber = random(3);
+    randNumber = random(4);
     if(randNumber == 0) LEDoutput = grBtnOutp;
     else if (randNumber == 1) LEDoutput = redBtnOutp;
     else if(randNumber == 2) LEDoutput = ylBtnOutp;
+    else LEDoutput = blBtnOutp;
     //random LED BLINK logic
 
     //Current game LEDs are lit
@@ -50,7 +56,7 @@ void loop() {
     for(int i = 0; i < score + 1; i++) 
     {
       // Wait until button is clicked is available
-      while (digitalRead(grBtnInp) == LOW && digitalRead(redBtnInp) == LOW && digitalRead(ylBtnInp) == LOW) {
+      while (digitalRead(grBtnInp) == LOW && digitalRead(redBtnInp) == LOW && digitalRead(ylBtnInp) == LOW && digitalRead(blBtnInp) == LOW) {
         // Do nothing, just wait
       }
         
@@ -80,8 +86,16 @@ void loop() {
           return;
         }     
       }
+      else {
+        blink(blBtnOutp, 150);
+        if(LEDoutputs[i] != blBtnOutp)
+        {
+          gameOver();
+          return;
+        }  
+      }
         
-      while (digitalRead(grBtnInp) == HIGH || digitalRead(redBtnInp) == HIGH || digitalRead(ylBtnInp) == HIGH) {
+      while (digitalRead(grBtnInp) == HIGH || digitalRead(redBtnInp) == HIGH || digitalRead(ylBtnInp) == HIGH || digitalRead(blBtnInp) == HIGH) {
         // Do nothing, just wait
       }
     }
@@ -110,12 +124,14 @@ void gameOver() {
 
     for(int i = 0; i < 3; i++){
     digitalWrite(grBtnOutp, HIGH);
-    digitalWrite(ylBtnOutp, HIGH);
     digitalWrite(redBtnOutp, HIGH);
+    digitalWrite(ylBtnOutp, HIGH);
+    digitalWrite(blBtnOutp, HIGH);
     delay(200);
     digitalWrite(grBtnOutp, LOW);
-    digitalWrite(ylBtnOutp, LOW);
     digitalWrite(redBtnOutp, LOW);
+    digitalWrite(ylBtnOutp, LOW);
+    digitalWrite(blBtnOutp, LOW);
     delay(200);
   }
   delay(1000);
