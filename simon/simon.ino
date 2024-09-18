@@ -12,7 +12,7 @@ int ylBtnInp = 4;
 int ylBtnOutp = 10;
 
 int blBtnInp = 5;
-int blBtnOutp = 10;
+int blBtnOutp = 11;
 
 void setup() {
   Serial.begin(9600);
