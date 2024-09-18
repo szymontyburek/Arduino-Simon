@@ -56,7 +56,7 @@ void loop() {
         
       if(digitalRead(grBtnInp) == HIGH)
       {
-        blink(grBtnOutp, 300);
+        blink(grBtnOutp, 150);
         if(LEDoutputs[i] != grBtnOutp)
         {
           gameOver();
@@ -65,7 +65,7 @@ void loop() {
       }
       else if(digitalRead(redBtnInp) == HIGH)
       {
-        blink(redBtnOutp, 300);
+        blink(redBtnOutp, 150);
         if(LEDoutputs[i] != redBtnOutp) 
         {
           gameOver();
@@ -73,7 +73,7 @@ void loop() {
         } 
       }
       else if(digitalRead(ylBtnInp) == HIGH) {
-        blink(ylBtnOutp, 300);
+        blink(ylBtnOutp, 150);
         if(LEDoutputs[i] != ylBtnOutp)
         {
           gameOver();
@@ -87,6 +87,7 @@ void loop() {
     }
     //User response
     
+    delay(300);
     score++;
     reportScore();
 
