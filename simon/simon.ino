@@ -9,7 +9,7 @@ int redBtnInp = 3;
 int redBtnOutp = 9;
 
 int ylBtnInp = 4;
-int ylBtnOutp = 9;
+int ylBtnOutp = 10;
 
 void setup() {
   Serial.begin(9600);
@@ -31,9 +31,10 @@ void loop() {
     int LEDoutput;
 
     //random LED BLINK logic
-    randNumber = random(2);
+    randNumber = random(3);
     if(randNumber == 0) LEDoutput = grBtnOutp;
-    else LEDoutput = redBtnOutp;
+    else if (randNumber == 1) LEDoutput = redBtnOutp;
+    else if(randNumber == 2) LEDoutput = ylBtnOutp;
     //random LED BLINK logic
 
     //Current game LEDs are lit
@@ -62,7 +63,7 @@ void loop() {
           return;
         }         
       }
-      else  
+      else if(digitalRead(redBtnInp) == HIGH)
       {
         blink(redBtnOutp, 300);
         if(LEDoutputs[i] != redBtnOutp) 
@@ -70,6 +71,14 @@ void loop() {
           gameOver();
           return;
         } 
+      }
+      else if(digitalRead(ylBtnInp) == HIGH) {
+        blink(ylBtnOutp, 300);
+        if(LEDoutputs[i] != ylBtnOutp)
+        {
+          gameOver();
+          return;
+        }     
       }
         
       while (digitalRead(grBtnInp) == HIGH || digitalRead(redBtnInp) == HIGH || digitalRead(ylBtnInp) == HIGH) {
@@ -100,9 +109,11 @@ void gameOver() {
 
     for(int i = 0; i < 3; i++){
     digitalWrite(grBtnOutp, HIGH);
+    digitalWrite(ylBtnOutp, HIGH);
     digitalWrite(redBtnOutp, HIGH);
     delay(200);
     digitalWrite(grBtnOutp, LOW);
+    digitalWrite(ylBtnOutp, LOW);
     digitalWrite(redBtnOutp, LOW);
     delay(200);
   }
