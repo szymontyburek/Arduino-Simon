@@ -5,15 +5,20 @@ int score;
 int grBtnInp = 2;
 int grBtnOutp = 8;
 
-int redBtnInp = 7;
-int redBtnOutp = 12;
+int redBtnInp = 3;
+int redBtnOutp = 9;
+
+int ylBtnInp = 4;
+int ylBtnOutp = 9;
 
 void setup() {
   Serial.begin(9600);
-  pinMode(grBtnOutp, OUTPUT);
-  pinMode(redBtnOutp, OUTPUT);
   pinMode(grBtnInp, INPUT);
+  pinMode(grBtnOutp, OUTPUT);
   pinMode(redBtnInp, INPUT);
+  pinMode(redBtnOutp, OUTPUT);
+  pinMode(ylBtnInp, INPUT);
+  pinMode(ylBtnOutp, OUTPUT);
 
   delay(1000);
 }
@@ -44,7 +49,7 @@ void loop() {
     for(int i = 0; i < score + 1; i++) 
     {
       // Wait until button is clicked is available
-      while (digitalRead(grBtnInp) == LOW && digitalRead(redBtnInp) == LOW) {
+      while (digitalRead(grBtnInp) == LOW && digitalRead(redBtnInp) == LOW && digitalRead(ylBtnInp) == LOW) {
         // Do nothing, just wait
       }
         
@@ -67,7 +72,7 @@ void loop() {
         } 
       }
         
-      while (digitalRead(grBtnInp) == HIGH || digitalRead(redBtnInp) == HIGH) {
+      while (digitalRead(grBtnInp) == HIGH || digitalRead(redBtnInp) == HIGH || digitalRead(ylBtnInp) == HIGH) {
         // Do nothing, just wait
       }
     }
