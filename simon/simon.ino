@@ -5,15 +5,25 @@ int score;
 int grBtnInp = 2;
 int grBtnOutp = 8;
 
-int redBtnInp = 7;
-int redBtnOutp = 12;
+int redBtnInp = 3;
+int redBtnOutp = 9;
+
+int ylBtnInp = 4;
+int ylBtnOutp = 10;
+
+int blBtnInp = 5;
+int blBtnOutp = 11;
 
 void setup() {
   Serial.begin(9600);
-  pinMode(grBtnOutp, OUTPUT);
-  pinMode(redBtnOutp, OUTPUT);
   pinMode(grBtnInp, INPUT);
+  pinMode(grBtnOutp, OUTPUT);
   pinMode(redBtnInp, INPUT);
+  pinMode(redBtnOutp, OUTPUT);
+  pinMode(ylBtnInp, INPUT);
+  pinMode(ylBtnOutp, OUTPUT);
+  pinMode(blBtnInp, INPUT);
+  pinMode(blBtnOutp, OUTPUT);
 
   delay(1000);
 }
@@ -26,9 +36,11 @@ void loop() {
     int LEDoutput;
 
     //random LED BLINK logic
-    randNumber = random(2);
+    randNumber = random(4);
     if(randNumber == 0) LEDoutput = grBtnOutp;
-    else LEDoutput = redBtnOutp;
+    else if (randNumber == 1) LEDoutput = redBtnOutp;
+    else if(randNumber == 2) LEDoutput = ylBtnOutp;
+    else LEDoutput = blBtnOutp;
     //random LED BLINK logic
 
     //Current game LEDs are lit
@@ -44,35 +56,34 @@ void loop() {
     for(int i = 0; i < score + 1; i++) 
     {
       // Wait until button is clicked is available
-      while (digitalRead(grBtnInp) == LOW && digitalRead(redBtnInp) == LOW) {
+      while (digitalRead(grBtnInp) == LOW && digitalRead(redBtnInp) == LOW && digitalRead(ylBtnInp) == LOW && digitalRead(blBtnInp) == LOW) {
         // Do nothing, just wait
       }
         
+      int requiredPin = LEDoutputs[i];
+
       if(digitalRead(grBtnInp) == HIGH)
       {
-        blink(grBtnOutp, 300);
-        if(LEDoutputs[i] != grBtnOutp)
-        {
-          gameOver();
-          return;
-        }         
+        if(!validInput(grBtnOutp, requiredPin)) return;       
       }
-      else  
+      else if(digitalRead(redBtnInp) == HIGH)
       {
-        blink(redBtnOutp, 300);
-        if(LEDoutputs[i] != redBtnOutp) 
-        {
-          gameOver();
-          return;
-        } 
+        if(!validInput(redBtnOutp, requiredPin)) return;       
+      }
+      else if(digitalRead(ylBtnInp) == HIGH) {
+        if(!validInput(ylBtnOutp, requiredPin)) return;       
+      }
+      else {
+        if(!validInput(blBtnOutp, requiredPin)) return;       
       }
         
-      while (digitalRead(grBtnInp) == HIGH || digitalRead(redBtnInp) == HIGH) {
+      while (digitalRead(grBtnInp) == HIGH || digitalRead(redBtnInp) == HIGH || digitalRead(ylBtnInp) == HIGH || digitalRead(blBtnInp) == HIGH) {
         // Do nothing, just wait
       }
     }
     //User response
     
+    delay(300);
     score++;
     reportScore();
 
@@ -90,15 +101,29 @@ void loop() {
   }
 }
 
+bool validInput(int chosenPin, int requiredPin) {
+  blink(chosenPin, 150);
+  if(chosenPin != requiredPin)
+  {
+    gameOver();
+    return false;
+  }  
+  return true;
+}
+
 void gameOver() {
     reportScore();
 
     for(int i = 0; i < 3; i++){
     digitalWrite(grBtnOutp, HIGH);
     digitalWrite(redBtnOutp, HIGH);
+    digitalWrite(ylBtnOutp, HIGH);
+    digitalWrite(blBtnOutp, HIGH);
     delay(200);
     digitalWrite(grBtnOutp, LOW);
     digitalWrite(redBtnOutp, LOW);
+    digitalWrite(ylBtnOutp, LOW);
+    digitalWrite(blBtnOutp, LOW);
     delay(200);
   }
   delay(1000);
@@ -118,5 +143,5 @@ void blink(int outputPin, int delayInt) {
   digitalWrite(outputPin, HIGH);
   delay(delayInt);
   digitalWrite(outputPin, LOW);
-  delay(delayInt);
+  delay(delayInt / 2);
 }
