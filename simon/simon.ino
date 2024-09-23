@@ -60,39 +60,21 @@ void loop() {
         // Do nothing, just wait
       }
         
+      int requiredPin = LEDoutputs[i];
+
       if(digitalRead(grBtnInp) == HIGH)
       {
-        blink(grBtnOutp, 150);
-        if(LEDoutputs[i] != grBtnOutp)
-        {
-          gameOver();
-          return;
-        }         
+        if(!validInput(grBtnOutp, requiredPin)) return;       
       }
       else if(digitalRead(redBtnInp) == HIGH)
       {
-        blink(redBtnOutp, 150);
-        if(LEDoutputs[i] != redBtnOutp) 
-        {
-          gameOver();
-          return;
-        } 
+        if(!validInput(redBtnOutp, requiredPin)) return;       
       }
       else if(digitalRead(ylBtnInp) == HIGH) {
-        blink(ylBtnOutp, 150);
-        if(LEDoutputs[i] != ylBtnOutp)
-        {
-          gameOver();
-          return;
-        }     
+        if(!validInput(ylBtnOutp, requiredPin)) return;       
       }
       else {
-        blink(blBtnOutp, 150);
-        if(LEDoutputs[i] != blBtnOutp)
-        {
-          gameOver();
-          return;
-        }  
+        if(!validInput(blBtnOutp, requiredPin)) return;       
       }
         
       while (digitalRead(grBtnInp) == HIGH || digitalRead(redBtnInp) == HIGH || digitalRead(ylBtnInp) == HIGH || digitalRead(blBtnInp) == HIGH) {
@@ -117,6 +99,16 @@ void loop() {
     LEDoutputs = LEDoutputsTmp;
     //modify array by dynamically allocating memory
   }
+}
+
+bool validInput(int chosenPin, int requiredPin) {
+  blink(chosenPin, 150);
+  if(chosenPin != requiredPin)
+  {
+    gameOver();
+    return false;
+  }  
+  return true;
 }
 
 void gameOver() {
@@ -151,5 +143,5 @@ void blink(int outputPin, int delayInt) {
   digitalWrite(outputPin, HIGH);
   delay(delayInt);
   digitalWrite(outputPin, LOW);
-  delay(delayInt);
+  delay(delayInt / 2);
 }
