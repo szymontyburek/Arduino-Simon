@@ -3,16 +3,16 @@ int highScore;
 int score;
 
 int grBtnInp = 2;
-int grBtnOutp = 8;
+int grBtnOutp = 7;
 
 int redBtnInp = 3;
-int redBtnOutp = 9;
+int redBtnOutp = 8;
 
 int ylBtnInp = 4;
-int ylBtnOutp = 10;
+int ylBtnOutp = 9;
 
 int blBtnInp = 5;
-int blBtnOutp = 11;
+int blBtnOutp = 10;
 
 void setup() {
   Serial.begin(9600);
