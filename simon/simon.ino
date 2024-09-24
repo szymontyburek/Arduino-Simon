@@ -1,3 +1,5 @@
+#define TABLE_SIZE 10
+
 long randNumber;
 int highScore;
 int score;
@@ -17,6 +19,9 @@ int blBtnOutp = 10;
 //LED wiring
 
 //4 digit segment display wiring
+String keys[TABLE_SIZE];
+unsigned char values[TABLE_SIZE];
+
 unsigned char hexChars[]=
 {0x40,0x06,0x5b,0x4f,0x66,0x6d,0x7d,0x07,0x7f,0x6f,0x77,0x7c
 ,0x39,0x5e,0x79,0x71,0x00};
@@ -122,6 +127,31 @@ void loop() {
     //modify array by dynamically allocating memory
   }
 }
+
+//methods related to 4 digit segmented display
+int hashFunction(String key) {
+  int hash = 0;
+  for (int i = 0; i < key.length(); i++) {
+    hash += key[i];
+  }
+  return hash % TABLE_SIZE;
+}
+
+void insert(String key, int value) {
+  int index = hashFunction(key);
+  keys[index] = key;
+  values[index] = value;
+}
+
+int get(String key) {
+  int index = hashFunction(key);
+  if (keys[index] == key) {
+    return values[index];
+  } else {
+    return -1;  // Key not found
+  }
+}
+//methods related to 4 digit segmented display
 
 bool validInput(int chosenPin, int requiredPin) {
   blink(chosenPin, 150);
