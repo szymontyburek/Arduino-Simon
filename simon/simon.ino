@@ -1,5 +1,3 @@
-#define TABLE_SIZE 10
-
 long randNumber;
 int highScore;
 int score;
@@ -19,8 +17,10 @@ int blBtnOutp = 10;
 //LED wiring
 
 //4 digit segment display wiring
-String keys[TABLE_SIZE];
-unsigned char values[TABLE_SIZE];
+#define TABLE_SIZE 11
+
+String keys[TABLE_SIZE] = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "-"};
+unsigned char values[TABLE_SIZE] = {0x3F, 0x06, 0x5B, 0x4F, 0x66, 0x6D, 0x7D, 0x07, 0x7F, 0x6F, 0x40};
 
 unsigned char hexChars[]=
 {0x40,0x06,0x5b,0x4f,0x66,0x6d,0x7d,0x07,0x7f,0x6f,0x77,0x7c
@@ -135,12 +135,6 @@ int hashFunction(String key) {
     hash += key[i];
   }
   return hash % TABLE_SIZE;
-}
-
-void insert(String key, int value) {
-  int index = hashFunction(key);
-  keys[index] = key;
-  values[index] = value;
 }
 
 int get(String key) {
