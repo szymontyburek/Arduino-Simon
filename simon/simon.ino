@@ -22,10 +22,6 @@ int blBtnOutp = 10;
 String keys[TABLE_SIZE] = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "-"};
 unsigned char values[TABLE_SIZE] = {0x3F, 0x06, 0x5B, 0x4F, 0x66, 0x6D, 0x7D, 0x07, 0x7F, 0x6F, 0x40};
 
-unsigned char hexChars[]=
-{0x40,0x06,0x5b,0x4f,0x66,0x6d,0x7d,0x07,0x7f,0x6f,0x77,0x7c
-,0x39,0x5e,0x79,0x71,0x00};
-
 int latch=12;  //orange wire
 int clock=13; //green wire
 int data=11;   //yellow wire
@@ -51,7 +47,7 @@ void setup() {
   pinMode(data,OUTPUT);
   //4 digit segment display
 
-  Display(0);
+  Display("0");
   delay(1000);
 }
 
@@ -137,13 +133,8 @@ int hashFunction(String key) {
   return hash % TABLE_SIZE;
 }
 
-int get(String key) {
-  int index = hashFunction(key);
-  if (keys[index] == key) {
-    return values[index];
-  } else {
-    return -1;  // Key not found
-  }
+unsigned char get(String key) {
+  return values[hashFunction(key)];
 }
 //methods related to 4 digit segmented display
 
@@ -192,9 +183,9 @@ void blink(int outputPin, int delayInt) {
   delay(delayInt / 2);
 }
 
-void Display(unsigned char num)
+void Display(String ch)
 {
   digitalWrite(latch,LOW);
-  shiftOut(data,clock,MSBFIRST,hexChars[num]);
+  shiftOut(data,clock,MSBFIRST, get(ch));
   digitalWrite(latch,HIGH);
 }
