@@ -19,7 +19,7 @@ int blBtnOutp = 10;
 //4 digit segment display wiring
 #define TABLE_SIZE 11
 
-String keys[TABLE_SIZE] = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "-"};
+String charAsStrs[TABLE_SIZE] = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "-"};
 unsigned char values[TABLE_SIZE] = {0x3F, 0x06, 0x5B, 0x4F, 0x66, 0x6D, 0x7D, 0x07, 0x7F, 0x6F, 0x40};
 
 int latch=12;  //orange wire
@@ -47,7 +47,7 @@ void setup() {
   pinMode(data,OUTPUT);
   //4 digit segment display
 
-  Display("0");
+  Display("-");
   delay(1000);
 }
 
@@ -125,16 +125,18 @@ void loop() {
 }
 
 //methods related to 4 digit segmented display
-int hashFunction(String key) {
-  int hash = 0;
-  for (int i = 0; i < key.length(); i++) {
-    hash += key[i];
+int getCharAsHex(String charAsStr) {
+  for (int i = 0; i < sizeof(charAsStrs) / sizeof(charAsStrs[0]); i++) {
+    if(charAsStrs[i] == charAsStr) return values[i];
   }
-  return hash % TABLE_SIZE;
+  return -1;
 }
 
-unsigned char get(String key) {
-  return values[hashFunction(key)];
+void Display(String ch)
+{
+  digitalWrite(latch,LOW);
+  shiftOut(data,clock,MSBFIRST, getCharAsHex(ch));
+  digitalWrite(latch,HIGH);
 }
 //methods related to 4 digit segmented display
 
@@ -181,11 +183,4 @@ void blink(int outputPin, int delayInt) {
   delay(delayInt);
   digitalWrite(outputPin, LOW);
   delay(delayInt / 2);
-}
-
-void Display(String ch)
-{
-  digitalWrite(latch,LOW);
-  shiftOut(data,clock,MSBFIRST, get(ch));
-  digitalWrite(latch,HIGH);
 }
