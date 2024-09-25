@@ -30,6 +30,8 @@ void setup() {
   pinMode(blBtnOutp, OUTPUT);
   //LED wiring
 
+  randomSeed(analogRead(0));  // Read from an unconnected analog pin for entropy
+
   delay(1000);
 }
 
@@ -41,7 +43,7 @@ void loop() {
     int LEDoutput;
 
     //random LED BLINK logic
-    randNumber = random(4);
+    randNumber = random(0, 4); //generate # from 0 - 3
     if(randNumber == 0) LEDoutput = grBtnOutp;
     else if (randNumber == 1) LEDoutput = redBtnOutp;
     else if(randNumber == 2) LEDoutput = ylBtnOutp;
