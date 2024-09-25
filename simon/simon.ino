@@ -125,13 +125,6 @@ void loop() {
 }
 
 //methods related to 4 digit segmented display
-int getCharAsHex(String charAsStr) {
-  for (int i = 0; i < sizeof(charAsStrs) / sizeof(charAsStrs[0]); i++) {
-    if(charAsStrs[i] == charAsStr) return values[i];
-  }
-  return -1;
-}
-
 void segmentedDisplay(String charAsStr)
 {
   unsigned char charAsHex;
