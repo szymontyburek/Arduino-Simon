@@ -4,16 +4,16 @@ int score;
 
 //LED wiring
 int grBtnInp = 2;
-int grBtnOutp = 7;
+int grBtnOutp = 6;
 
 int redBtnInp = 3;
-int redBtnOutp = 8;
+int redBtnOutp = 7;
 
 int ylBtnInp = 4;
-int ylBtnOutp = 9;
+int ylBtnOutp = 8;
 
 int blBtnInp = 5;
-int blBtnOutp = 10;
+int blBtnOutp = 9;
 //LED wiring
 
 void setup() {
