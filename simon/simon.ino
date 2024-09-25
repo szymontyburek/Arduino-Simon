@@ -47,7 +47,7 @@ void setup() {
   pinMode(data,OUTPUT);
   //4 digit segment display
 
-  Display("-");
+  segmentedDisplay("-");
   delay(1000);
 }
 
@@ -132,10 +132,16 @@ int getCharAsHex(String charAsStr) {
   return -1;
 }
 
-void Display(String ch)
+void segmentedDisplay(String charAsStr)
 {
+  unsigned char charAsHex;
+
+  for (int i = 0; i < sizeof(charAsStrs) / sizeof(charAsStrs[0]); i++) {
+    if(charAsStrs[i] == charAsStr) charAsHex = values[i];
+  }
+
   digitalWrite(latch,LOW);
-  shiftOut(data,clock,MSBFIRST, getCharAsHex(ch));
+  shiftOut(data,clock,MSBFIRST, charAsHex);
   digitalWrite(latch,HIGH);
 }
 //methods related to 4 digit segmented display
