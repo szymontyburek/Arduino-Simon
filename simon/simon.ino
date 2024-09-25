@@ -16,17 +16,6 @@ int blBtnInp = 5;
 int blBtnOutp = 10;
 //LED wiring
 
-//4 digit segment display wiring
-#define TABLE_SIZE 11
-
-String charAsStrs[TABLE_SIZE] = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "-"};
-unsigned char values[TABLE_SIZE] = {0x3F, 0x06, 0x5B, 0x4F, 0x66, 0x6D, 0x7D, 0x07, 0x7F, 0x6F, 0x40};
-
-int latch=12;  //orange wire
-int clock=13; //green wire
-int data=11;   //yellow wire
-//4 digit segment display wiring
-
 void setup() {
   Serial.begin(9600);
 
@@ -41,13 +30,6 @@ void setup() {
   pinMode(blBtnOutp, OUTPUT);
   //LED wiring
 
-  //4 digit segment display
-  pinMode(latch,OUTPUT);
-  pinMode(clock,OUTPUT);
-  pinMode(data,OUTPUT);
-  //4 digit segment display
-
-  segmentedDisplay("-");
   delay(1000);
 }
 
@@ -123,21 +105,6 @@ void loop() {
     //modify array by dynamically allocating memory
   }
 }
-
-//methods related to 4 digit segmented display
-void segmentedDisplay(String charAsStr)
-{
-  unsigned char charAsHex;
-
-  for (int i = 0; i < sizeof(charAsStrs) / sizeof(charAsStrs[0]); i++) {
-    if(charAsStrs[i] == charAsStr) charAsHex = values[i];
-  }
-
-  digitalWrite(latch,LOW);
-  shiftOut(data,clock,MSBFIRST, charAsHex);
-  digitalWrite(latch,HIGH);
-}
-//methods related to 4 digit segmented display
 
 bool validInput(int chosenPin, int requiredPin) {
   blink(chosenPin, 150);
