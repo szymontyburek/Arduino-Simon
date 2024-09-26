@@ -142,7 +142,7 @@ bool validInput(int chosenPin, int requiredPin) {
 void gameOver() {
     score = 0;
 
-    for(int i = 0; i < 3; i++){
+    for(int i = 0; i < 4; i++){
     digitalWrite(grBtnOutp, HIGH);
     digitalWrite(redBtnOutp, HIGH);
     digitalWrite(ylBtnOutp, HIGH);
