@@ -165,10 +165,6 @@ void reportScore() {
     EEPROM[0] = highScore;
   } 
 
-  writeToLCD();
-}
-
-void writeToLCD() {
   lcd.setCursor(6, 0);
   lcd.print(score);
 
