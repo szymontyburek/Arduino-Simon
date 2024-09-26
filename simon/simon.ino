@@ -171,5 +171,3 @@ void blink(int outputPin, int delayInt) {
   digitalWrite(outputPin, LOW);
   delay(delayInt / 2);
 }
-
-
