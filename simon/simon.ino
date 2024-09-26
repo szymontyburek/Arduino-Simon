@@ -35,8 +35,11 @@ void setup() {
   pinMode(blBtnOutp, OUTPUT);
   //LED wiring
 
-  lcd.begin(12, 2); //12 columns, 2 rows
-  lcd.print("Score: ");
+  lcd.begin(16, 2); //12 columns, 2 rows
+  lcd.print("Score:");
+
+    lcd.setCursor(6, 0);
+lcd.print(34);
 
   lcd.setCursor(0, 1); //column 1, row 2 (Zero-based numbering)
   lcd.print("Highest: 2");
