@@ -1,11 +1,12 @@
+#include <EEPROM.h>
 #include <LiquidCrystal.h>
 
 // initialize the library with the numbers of the interface pins
 LiquidCrystal lcd(10, 11, 12, 13, A1, A0);
 
 long randNumber;
-int highScore;
-int score;
+int highScore = EEPROM[0];
+int score = 0;
 
 //LED wiring
 int grBtnInp = 2;
@@ -22,8 +23,6 @@ int blBtnOutp = 9;
 //LED wiring
 
 void setup() {
-  highScore = 2;
-
   //LED wiring
   pinMode(grBtnInp, INPUT);
   pinMode(grBtnOutp, OUTPUT);
@@ -36,10 +35,15 @@ void setup() {
   //LED wiring
 
   lcd.begin(16, 2); //12 columns, 2 rows
-  lcd.print("Score:0");
-
+  lcd.print("Score:");
   lcd.setCursor(0, 1); //column 1, row 2 (Zero-based numbering)
-  lcd.print("Highest:2");
+  lcd.print("Highest:");
+
+  lcd.setCursor(6, 0);
+  lcd.print(score);
+
+  lcd.setCursor(8, 1);
+  lcd.print(highScore);
 
   randomSeed(analogRead(5));  // Read from an unconnected analog pin for entropy
 
@@ -149,14 +153,15 @@ void gameOver() {
 }
 
 void reportScore() {
+  if(score > highScore) {
+    highScore = score;
+  } 
+
   lcd.setCursor(6, 0);
   lcd.print(score);
 
-  if(score > highScore) {
-    highScore = score;
-    lcd.setCursor(8, 1);
-    lcd.print(highScore);
-  } 
+  lcd.setCursor(8, 1);
+  lcd.print(highScore);
 }
 
 void blink(int outputPin, int delayInt) {
