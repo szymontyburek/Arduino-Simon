@@ -8,7 +8,12 @@ LiquidCrystal lcd(10, 11, 12, 13, A1, A0);
 //passive buzzer
 int melody[] = {
   NOTE_C5, NOTE_D5, NOTE_E5, NOTE_F5, NOTE_G5, NOTE_A5, NOTE_B5, NOTE_C6};
-int freq = melody[0];
+int gameOverFreq = melody[0];
+int setupFreq = melody[1];
+int redLEDfreq = melody[2];
+int grLEDfreq = melody[3];
+int ylLEDfreq = melody[4];
+int blLEDfreq = melody[5];
 //passive buzzer
 
 long randNumber;
@@ -48,12 +53,11 @@ void setup() {
   writeToLCD();
 
   randomSeed(analogRead(5));  // Read from an unconnected analog pin for entropy
-
-  buzz(freq, 1000);
-  delay(1000);
 }
 
 void loop() {
+  buzz(setupFreq, 1000);
+  delay(1000);
   int* LEDoutputs = new int[1];
 
   while (true) {
@@ -127,7 +131,7 @@ void loop() {
 
 bool validInput(int chosenPin, int requiredPin) {
   blink(chosenPin, 150);
-  buzz(freq, 150);
+  buzz(gameOverFreq, 150);
   if(chosenPin != requiredPin)
   {
     gameOver();
@@ -145,13 +149,13 @@ void gameOver() {
     digitalWrite(redBtnOutp, HIGH);
     digitalWrite(ylBtnOutp, HIGH);
     digitalWrite(blBtnOutp, HIGH);
-    buzz(freq, 200);
+    buzz(gameOverFreq, 200);
     delay(200);
     digitalWrite(grBtnOutp, LOW);
     digitalWrite(redBtnOutp, LOW);
     digitalWrite(ylBtnOutp, LOW);
     digitalWrite(blBtnOutp, LOW);
-    buzz(freq, 200);
+    buzz(gameOverFreq, 200);
     delay(200);
   }
   delay(1000);
