@@ -1,21 +1,29 @@
-long randNumber;
-int highScore;
-int score;
+#include <EEPROM.h>
+#include <LiquidCrystal.h>
 
+// initialize the library with the numbers of the interface pins
+LiquidCrystal lcd(10, 11, 12, 13, A1, A0);
+
+long randNumber;
+int highScore = EEPROM[0];
+int score = 0;
+
+//LED wiring
 int grBtnInp = 2;
-int grBtnOutp = 8;
+int grBtnOutp = 6;
 
 int redBtnInp = 3;
-int redBtnOutp = 9;
+int redBtnOutp = 7;
 
 int ylBtnInp = 4;
-int ylBtnOutp = 10;
+int ylBtnOutp = 8;
 
 int blBtnInp = 5;
-int blBtnOutp = 11;
+int blBtnOutp = 9;
+//LED wiring
 
 void setup() {
-  Serial.begin(9600);
+  //LED wiring
   pinMode(grBtnInp, INPUT);
   pinMode(grBtnOutp, OUTPUT);
   pinMode(redBtnInp, INPUT);
@@ -24,6 +32,16 @@ void setup() {
   pinMode(ylBtnOutp, OUTPUT);
   pinMode(blBtnInp, INPUT);
   pinMode(blBtnOutp, OUTPUT);
+  //LED wiring
+
+  lcd.begin(16, 2); //12 columns, 2 rows
+  lcd.print("Score:");
+  lcd.setCursor(0, 1); //column 1, row 2 (Zero-based numbering)
+  lcd.print("Highest:");
+
+  writeToLCD();
+
+  randomSeed(analogRead(5));  // Read from an unconnected analog pin for entropy
 
   delay(1000);
 }
@@ -36,7 +54,7 @@ void loop() {
     int LEDoutput;
 
     //random LED BLINK logic
-    randNumber = random(4);
+    randNumber = random(0, 4); //generate # from 0 - 3
     if(randNumber == 0) LEDoutput = grBtnOutp;
     else if (randNumber == 1) LEDoutput = redBtnOutp;
     else if(randNumber == 2) LEDoutput = ylBtnOutp;
@@ -112,6 +130,7 @@ bool validInput(int chosenPin, int requiredPin) {
 }
 
 void gameOver() {
+    score = 0;
     reportScore();
 
     for(int i = 0; i < 3; i++){
@@ -130,13 +149,20 @@ void gameOver() {
 }
 
 void reportScore() {
-  Serial.print("Score: ");
-  Serial.println(score);
+  if(score > highScore) {
+    highScore = score;
+    EEPROM[0] = highScore;
+  } 
 
-  if(score > highScore) highScore = score;
+  writeToLCD();
+}
 
-  Serial.print("Highest: ");
-  Serial.println(highScore);
+void writeToLCD() {
+  lcd.setCursor(6, 0);
+  lcd.print(score);
+
+  lcd.setCursor(8, 1);
+  lcd.print(highScore);
 }
 
 void blink(int outputPin, int delayInt) {
