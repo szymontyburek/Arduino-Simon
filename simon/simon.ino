@@ -46,14 +46,19 @@ void setup() {
   //LED wiring
 
   lcd.begin(16, 2); //12 columns, 2 rows
+
+  randomSeed(analogRead(5));  // Read from an unconnected analog pin for entropy
+
+  delay(3000);
+}
+
+void loop() {
+  lcd.clear();
+  lcd.setCursor(0, 0); //column 1, row 1 (Zero-based numbering)
   lcd.print("Score:");
   lcd.setCursor(0, 1); //column 1, row 2 (Zero-based numbering)
   lcd.print("Highest:");
 
-  randomSeed(analogRead(5));  // Read from an unconnected analog pin for entropy
-}
-
-void loop() {
   reportScore();
 
   delay(1000);
