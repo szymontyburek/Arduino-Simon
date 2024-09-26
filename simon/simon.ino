@@ -36,13 +36,10 @@ void setup() {
   //LED wiring
 
   lcd.begin(16, 2); //12 columns, 2 rows
-  lcd.print("Score:");
-
-    lcd.setCursor(6, 0);
-lcd.print(34);
+  lcd.print("Score:0");
 
   lcd.setCursor(0, 1); //column 1, row 2 (Zero-based numbering)
-  lcd.print("Highest: 2");
+  lcd.print("Highest:2");
 
   randomSeed(analogRead(5));  // Read from an unconnected analog pin for entropy
 
@@ -133,6 +130,7 @@ bool validInput(int chosenPin, int requiredPin) {
 }
 
 void gameOver() {
+    score = 0;
     reportScore();
 
     for(int i = 0; i < 3; i++){
@@ -151,13 +149,14 @@ void gameOver() {
 }
 
 void reportScore() {
-  lcd.setCursor(0, 6);
+  lcd.setCursor(6, 0);
   lcd.print(score);
 
-  if(score > highScore) highScore = score;
-
-  lcd.setCursor(1, 9);
-  lcd.print(highScore);
+  if(score > highScore) {
+    highScore = score;
+    lcd.setCursor(8, 1);
+    lcd.print(highScore);
+  } 
 }
 
 void blink(int outputPin, int delayInt) {
