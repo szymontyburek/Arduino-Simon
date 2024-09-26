@@ -8,7 +8,7 @@ LiquidCrystal lcd(10, 11, 12, 13, A1, A0);
 //passive buzzer
 int melody[] = {
   NOTE_C5, NOTE_D5, NOTE_E5, NOTE_F5, NOTE_G5, NOTE_A5, NOTE_B5, NOTE_C6};
-int duration = 500;
+int freq = melody[0];
 //passive buzzer
 
 long randNumber;
@@ -45,24 +45,15 @@ void setup() {
   lcd.print("Score:");
   lcd.setCursor(0, 1); //column 1, row 2 (Zero-based numbering)
   lcd.print("Highest:");
-
   writeToLCD();
 
   randomSeed(analogRead(5));  // Read from an unconnected analog pin for entropy
 
+  buzz(freq, 1000);
   delay(1000);
-
-  for (int thisNote = 0; thisNote < 8; thisNote++) {
-    // pin8 output the voice, every scale is 0.5 sencond
-    tone(A2, melody[thisNote], duration);
-     
-    // Output the voice after several minutes
-    delay(1000);
-  }
 }
 
 void loop() {
-  score = 0;
   int* LEDoutputs = new int[1];
 
   while (true) {
@@ -136,6 +127,7 @@ void loop() {
 
 bool validInput(int chosenPin, int requiredPin) {
   blink(chosenPin, 150);
+  buzz(freq, 150);
   if(chosenPin != requiredPin)
   {
     gameOver();
@@ -153,11 +145,13 @@ void gameOver() {
     digitalWrite(redBtnOutp, HIGH);
     digitalWrite(ylBtnOutp, HIGH);
     digitalWrite(blBtnOutp, HIGH);
+    buzz(freq, 200);
     delay(200);
     digitalWrite(grBtnOutp, LOW);
     digitalWrite(redBtnOutp, LOW);
     digitalWrite(ylBtnOutp, LOW);
     digitalWrite(blBtnOutp, LOW);
+    buzz(freq, 200);
     delay(200);
   }
   delay(1000);
@@ -180,9 +174,13 @@ void writeToLCD() {
   lcd.print(highScore);
 }
 
-void blink(int outputPin, int delayInt) {
+void blink(int outputPin, int delayInt) { 
   digitalWrite(outputPin, HIGH);
   delay(delayInt);
   digitalWrite(outputPin, LOW);
   delay(delayInt / 2);
+}
+
+void buzz(int note, int duration) {
+  tone(A2, note, duration);
 }
