@@ -57,7 +57,7 @@ void setup() {
 
 void loop() {
   buzz(setupFreq, 1000);
-  delay(1000);
+  delay(1500);
   int* LEDoutputs = new int[1];
 
   while (true) {
@@ -76,7 +76,7 @@ void loop() {
 
     for(int i = 0; i < score + 1; i++) 
     {
-      blink(LEDoutputs[i], 600);
+      blink(LEDoutputs[i], 300);
     }
     //Current game LEDs are lit
 
@@ -131,7 +131,7 @@ void loop() {
 
 bool validInput(int chosenPin, int requiredPin) {
   blink(chosenPin, 150);
-  buzz(gameOverFreq, 150);
+
   if(chosenPin != requiredPin)
   {
     gameOver();
@@ -179,6 +179,11 @@ void writeToLCD() {
 }
 
 void blink(int outputPin, int delayInt) { 
+  if(outputPin == grBtnOutp) buzz(grLEDfreq, delayInt);
+  else if (outputPin == redBtnOutp) buzz(redLEDfreq, delayInt);
+  else if(outputPin == ylBtnOutp) buzz(ylLEDfreq, delayInt);
+  else buzz(blLEDfreq, delayInt);
+
   digitalWrite(outputPin, HIGH);
   delay(delayInt);
   digitalWrite(outputPin, LOW);
