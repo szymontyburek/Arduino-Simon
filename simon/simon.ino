@@ -39,11 +39,7 @@ void setup() {
   lcd.setCursor(0, 1); //column 1, row 2 (Zero-based numbering)
   lcd.print("Highest:");
 
-  lcd.setCursor(6, 0);
-  lcd.print(score);
-
-  lcd.setCursor(8, 1);
-  lcd.print(highScore);
+  writeToLCD();
 
   randomSeed(analogRead(5));  // Read from an unconnected analog pin for entropy
 
@@ -155,8 +151,13 @@ void gameOver() {
 void reportScore() {
   if(score > highScore) {
     highScore = score;
+    EEPROM[0] = highScore;
   } 
 
+  writeToLCD();
+}
+
+void writeToLCD() {
   lcd.setCursor(6, 0);
   lcd.print(score);
 
