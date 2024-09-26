@@ -9,11 +9,10 @@ LiquidCrystal lcd(10, 11, 12, 13, A1, A0);
 int melody[] = {
   NOTE_C5, NOTE_D5, NOTE_E5, NOTE_F5, NOTE_G5, NOTE_A5, NOTE_B5, NOTE_C6};
 int gameOverFreq = melody[0];
-int setupFreq = melody[1];
-int redLEDfreq = melody[2];
-int grLEDfreq = melody[3];
-int ylLEDfreq = melody[4];
-int blLEDfreq = melody[5];
+int redLEDfreq = melody[7];
+int grLEDfreq = melody[6];
+int ylLEDfreq = melody[5];
+int blLEDfreq = melody[4];
 //passive buzzer
 
 long randNumber;
@@ -50,14 +49,14 @@ void setup() {
   lcd.print("Score:");
   lcd.setCursor(0, 1); //column 1, row 2 (Zero-based numbering)
   lcd.print("Highest:");
-  writeToLCD();
 
   randomSeed(analogRead(5));  // Read from an unconnected analog pin for entropy
 }
 
 void loop() {
-  buzz(setupFreq, 1000);
-  delay(1500);
+  reportScore();
+
+  delay(1000);
   int* LEDoutputs = new int[1];
 
   while (true) {
@@ -142,7 +141,6 @@ bool validInput(int chosenPin, int requiredPin) {
 
 void gameOver() {
     score = 0;
-    reportScore();
 
     for(int i = 0; i < 3; i++){
     digitalWrite(grBtnOutp, HIGH);
