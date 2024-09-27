@@ -1,8 +1,19 @@
 #include <EEPROM.h>
 #include <LiquidCrystal.h>
+#include "pitches.h"
 
 // initialize the library with the numbers of the interface pins
 LiquidCrystal lcd(10, 11, 12, 13, A1, A0);
+
+//passive buzzer
+int melody[] = {
+  NOTE_C5, NOTE_D5, NOTE_E5, NOTE_F5, NOTE_G5, NOTE_A5, NOTE_B5, NOTE_C6};
+int gameOverFreq = melody[0];
+int redLEDfreq = melody[7];
+int grLEDfreq = melody[6];
+int ylLEDfreq = melody[5];
+int blLEDfreq = melody[4];
+//passive buzzer
 
 long randNumber;
 int highScore = EEPROM[0];
@@ -35,19 +46,22 @@ void setup() {
   //LED wiring
 
   lcd.begin(16, 2); //12 columns, 2 rows
+
+  randomSeed(analogRead(5));  // Read from an unconnected analog pin for entropy
+
+  delay(3000);
+}
+
+void loop() {
+  lcd.clear();
+  lcd.setCursor(0, 0); //column 1, row 1 (Zero-based numbering)
   lcd.print("Score:");
   lcd.setCursor(0, 1); //column 1, row 2 (Zero-based numbering)
   lcd.print("Highest:");
 
-  writeToLCD();
-
-  randomSeed(analogRead(5));  // Read from an unconnected analog pin for entropy
+  reportScore();
 
   delay(1000);
-}
-
-void loop() {
-  score = 0;
   int* LEDoutputs = new int[1];
 
   while (true) {
@@ -66,7 +80,7 @@ void loop() {
 
     for(int i = 0; i < score + 1; i++) 
     {
-      blink(LEDoutputs[i], 600);
+      blink(LEDoutputs[i], 300);
     }
     //Current game LEDs are lit
 
@@ -121,6 +135,7 @@ void loop() {
 
 bool validInput(int chosenPin, int requiredPin) {
   blink(chosenPin, 150);
+
   if(chosenPin != requiredPin)
   {
     gameOver();
@@ -131,18 +146,19 @@ bool validInput(int chosenPin, int requiredPin) {
 
 void gameOver() {
     score = 0;
-    reportScore();
 
-    for(int i = 0; i < 3; i++){
+    for(int i = 0; i < 4; i++){
     digitalWrite(grBtnOutp, HIGH);
     digitalWrite(redBtnOutp, HIGH);
     digitalWrite(ylBtnOutp, HIGH);
     digitalWrite(blBtnOutp, HIGH);
+    buzz(gameOverFreq, 200);
     delay(200);
     digitalWrite(grBtnOutp, LOW);
     digitalWrite(redBtnOutp, LOW);
     digitalWrite(ylBtnOutp, LOW);
     digitalWrite(blBtnOutp, LOW);
+    buzz(gameOverFreq, 200);
     delay(200);
   }
   delay(1000);
@@ -154,10 +170,6 @@ void reportScore() {
     EEPROM[0] = highScore;
   } 
 
-  writeToLCD();
-}
-
-void writeToLCD() {
   lcd.setCursor(6, 0);
   lcd.print(score);
 
@@ -165,9 +177,18 @@ void writeToLCD() {
   lcd.print(highScore);
 }
 
-void blink(int outputPin, int delayInt) {
+void blink(int outputPin, int delayInt) { 
+  if(outputPin == grBtnOutp) buzz(grLEDfreq, delayInt);
+  else if (outputPin == redBtnOutp) buzz(redLEDfreq, delayInt);
+  else if(outputPin == ylBtnOutp) buzz(ylLEDfreq, delayInt);
+  else buzz(blLEDfreq, delayInt);
+
   digitalWrite(outputPin, HIGH);
   delay(delayInt);
   digitalWrite(outputPin, LOW);
   delay(delayInt / 2);
+}
+
+void buzz(int note, int duration) {
+  tone(A2, note, duration);
 }
