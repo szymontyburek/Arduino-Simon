@@ -1,4 +1,16 @@
-What I've learned:
+## Demo Video
+
+To view a demo video, click the link below or view the .mp4 file in this repository:
+
+- [Watch the Demo Video](https://drive.google.com/file/d/1n3Zc85McnGXe91AbkSI68nb93nOnUecS/view?usp=sharing)
+
+### 📂 Alternative Approch
+
+You can also find the demo video in this repository:
+
+- [Download Demo Video](demo.mp4) _(please note that large files may impact performance)_
+
+## What I've learned:
 
 Standard 'Blink' program:
 
