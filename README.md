@@ -8,7 +8,7 @@ To view a demo video, click the link below or view the .mp4 file in this reposit
 
 You can also find the demo video in this repository:
 
-- [Download Demo Video](ArduinoSimon.mp4) _(please note that large files may impact performance)_
+- [Download Demo Video](ArduinoSimon.mp4)
 
 ## What I've learned:
 
